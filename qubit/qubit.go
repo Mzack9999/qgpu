@@ -1,28 +1,23 @@
 package qubit
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/Mzack9999/qgpu/vector"
+)
 
 type Qubit struct {
-	Zero complex128
-	One  complex128
+	vector vector.Vector
 }
 
-// prints qubit statevector containing zero/one superpositions with Dirac notation
+func New(z ...complex128) *Qubit {
+	qubit := &Qubit{
+		vector: vector.NewWithBits(z...),
+	}
+	return qubit
+}
+
+// prints qubit state vector
 func (qubit *Qubit) String() string {
-	return fmt.Sprintf("%v |0⟩ + %v |1⟩", qubit.Zero, qubit.One)
-}
-
-// |0>
-func Zero() *Qubit {
-	return &Qubit{Zero: 1}
-}
-
-// |1>
-func One() *Qubit {
-	return &Qubit{One: 1}
-}
-
-// todo: support multi-bit qubits
-func New(zero, one complex128) *Qubit {
-	return &Qubit{Zero: zero, One: one}
+	return fmt.Sprint(qubit.vector)
 }
