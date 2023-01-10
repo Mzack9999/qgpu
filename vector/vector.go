@@ -73,3 +73,31 @@ func (v Vector) InnerProduct(w Vector) complex128 {
 	}
 	return ip
 }
+
+// Clone an existing unit vector
+func (v Vector) Clone() Vector {
+	return New(v...)
+}
+
+// Add is a regular complex vector addition
+// vectors should have same size
+// |v⟩+|w⟩ = |w⟩ +|v⟩ (Comm)
+// |v⟩+(|w⟩+|z)= (|v⟩ +|w⟩)+|z⟩ (Assoc)
+func (v Vector) Add(w Vector) Vector {
+	add := make(Vector, 0, v.Size())
+	for i := 0; i < v.Size(); i++ {
+		add = append(add, v[i]+w[i])
+	}
+	return add
+}
+
+// Mul is the scalar product between the vector v and a real/complex scalar s
+// each vector complex number is scalarly multiplied by s
+// s|v⟩
+func (v Vector) Mul(s complex128) Vector {
+	mul := make(Vector, 0, v.Size())
+	for i := 0; i < v.Size(); i++ {
+		mul = append(mul, s*v[i])
+	}
+	return mul
+}
